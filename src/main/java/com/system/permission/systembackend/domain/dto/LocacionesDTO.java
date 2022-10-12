@@ -1,20 +1,21 @@
-package com.system.permission.systembackend.persistence.model;
+package com.system.permission.systembackend.domain.dto;
 
+import com.system.permission.systembackend.domain.model.Evento;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "locaciones")
-public class Locaciones {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_locacion")
+public class LocacionesDTO {
     private Integer idLocacion;
-    private String nombre;
-    private String capacidad;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_evento")
+    @NotEmpty
+    @Size(max = 50)
+    private String nombre;
+
+    @NotNull
+    private Integer capacidad;
+
     private Evento evento;
 
     public Integer getIdLocacion() {
@@ -33,11 +34,11 @@ public class Locaciones {
         this.nombre = nombre;
     }
 
-    public String getCapacidad() {
+    public Integer getCapacidad() {
         return capacidad;
     }
 
-    public void setCapacidad(String capacidad) {
+    public void setCapacidad(Integer capacidad) {
         this.capacidad = capacidad;
     }
 
@@ -47,5 +48,8 @@ public class Locaciones {
 
     public void setEvento(Evento evento) {
         this.evento = evento;
+    }
+    public LocacionesDTO(){
+        super();
     }
 }
