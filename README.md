@@ -8,6 +8,5 @@
 - 👉 Patrón REST
 - 👉 API basada en Roles
 - 👉 Manejo de Excepciones (Carpeta exception)
-- 👉 Envio de Correos (SendGrid)
 - 👉 DTO (creación manual)
 - 👉 Versionamiento del código con GIT
