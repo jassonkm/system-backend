@@ -4,7 +4,6 @@ import com.system.permission.systembackend.domain.model.Locaciones;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Set;
 
 public class EventoDTO {
@@ -16,10 +15,10 @@ public class EventoDTO {
     private String nombre;
 
     @NotNull
-    private Date fecha;
+    private LocalDate fecha;
 
-
-    private String nAsistentes;
+    @NotNull
+    private Integer nAsistentes;
 
     @NotEmpty
     @Size(max =100)
@@ -43,19 +42,19 @@ public class EventoDTO {
         this.nombre = nombre;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
-    public String getnAsistentes() {
+    public Integer getnAsistentes() {
         return nAsistentes;
     }
 
-    public void setnAsistentes(String nAsistentes) {
+    public void setnAsistentes(Integer nAsistentes) {
         this.nAsistentes = nAsistentes;
     }
 

@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "locaciones")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idLocacion")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id_locaciones")
 public class Locaciones {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +25,10 @@ public class Locaciones {
 
     public Locaciones(){}
 
-    public Locaciones(String nombre, Integer capacidad) {
+    public Locaciones(String nombre, Integer capacidad, Evento evento) {
         this.nombre = nombre;
         this.capacidad = capacidad;
-
+        this.evento = evento;
     }
 
     public Integer getIdLocacion() {
