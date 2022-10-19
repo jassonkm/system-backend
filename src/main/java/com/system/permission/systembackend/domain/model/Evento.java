@@ -3,12 +3,12 @@ package com.system.permission.systembackend.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,7 +18,7 @@ import java.util.Set;
         uniqueConstraints = {
         @UniqueConstraint(columnNames = "QR")
         })
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id_evento")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "idEvento")
 public class Evento implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -29,10 +29,10 @@ public class Evento implements Serializable {
 
     private String nombre;
 
-    private LocalDate fecha;
+    private Date fecha;
 
     @Column(name = "n_asistentes")
-    private Integer nAsistentes;
+    private String nAsistentes;
 
     private String qr;
 
@@ -58,19 +58,19 @@ public class Evento implements Serializable {
         this.nombre = nombre;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public Integer getnAsistentes() {
+    public String getnAsistentes() {
         return nAsistentes;
     }
 
-    public void setnAsistentes(Integer nAsistentes) {
+    public void setnAsistentes(String nAsistentes) {
         this.nAsistentes = nAsistentes;
     }
 
@@ -90,11 +90,14 @@ public class Evento implements Serializable {
         this.locaciones = locaciones;
     }
 
-    public Evento(String nombre, LocalDate fecha, Integer nAsistentes, String qr, Set<Locaciones> locaciones) {
+    public Evento(String nombre, Date fecha, String qr, Set<Locaciones> locaciones) {
         this.nombre = nombre;
         this.fecha = fecha;
-        this.nAsistentes = nAsistentes;
         this.qr = qr;
         this.locaciones = locaciones;
+    }
+
+    public Evento(String nAsistentes) {
+        this.nAsistentes = nAsistentes;
     }
 }
