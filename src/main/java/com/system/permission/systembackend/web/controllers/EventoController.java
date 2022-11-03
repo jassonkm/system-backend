@@ -48,6 +48,19 @@ public class EventoController {
                     .body(new MessageResponse(("El evento ya existe")));
         }
     }
+
+    @GetMapping("/getEventos")
+    public ResponseEntity<?>getListEventos(){
+        try {
+            return ResponseEntity
+                    .ok()
+                    .body(eventoService.findEvento());
+        }catch (Exception e){
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new MessageResponse("El evento no fue encontrado"));
+        }
+    }
     @PreAuthorize("hasRol('USER')")
     @GetMapping("/listar")
     public ResponseEntity<?> getEventos(@Valid @RequestParam(required = false, value = "idEVento")Integer idEvento){
