@@ -20,7 +20,7 @@ public class Locaciones {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_evento")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Ignora la serializacion
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Ignora la serializacion
     private Evento evento;
 
     public Locaciones(){}

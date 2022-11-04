@@ -16,6 +16,8 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
+@RequestMapping("/locaciones")
 public class LocacionesController {
 
     @Autowired
@@ -36,7 +38,7 @@ public class LocacionesController {
                 .status(HttpStatus.CREATED)
                 .body(locacionesService.addLocaciones(idEvento,locacionesDTO));
     }
-    @PreAuthorize("hasRole('ADMIN'")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{idLocaciones}")
     public ResponseEntity<?> updateLocaciones(@Valid @RequestBody LocacionesDTO locacionesDTO,@PathVariable(value = "idLocaciones") Integer idLocaciones){
         try{
