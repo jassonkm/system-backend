@@ -9,7 +9,7 @@ public interface EventoService {
 
     public boolean isNombre(String nombre);
 
-    public Evento saveEvento(Evento evento);
+    public Evento saveEvento(Integer idLocacion, EventoDTO eventoDTO);
 
     public List<Evento> findEvento();
     public Evento findByEventoId(Integer idEvento);
@@ -20,6 +20,6 @@ public interface EventoService {
     public Evento updateEvento(EventoDTO eventoDTO, Integer idEvento);
     public Evento updateAsistentes(EventoDTO eventoDTO,Integer idEvento);
 
-    public void deleteEvento(Integer idEvento);
+    public void deleteEvento(Integer idEvento, Integer idLocaciones);
 
 }

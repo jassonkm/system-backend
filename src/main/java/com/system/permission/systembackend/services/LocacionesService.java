@@ -8,7 +8,7 @@ import java.util.List;
 public interface LocacionesService {
     public boolean isNombre(String nombre);
 
-    public Locaciones addLocaciones(Integer idEvento, LocacionesDTO locacionesDTO);
+    public Locaciones addLocaciones(Locaciones locaciones);
 
     public List<Locaciones> findLocaciones();
 
@@ -16,5 +16,5 @@ public interface LocacionesService {
 
     public Locaciones updateLocaciones(LocacionesDTO locacionesDTO, Integer idLocaciones);
 
-    public void deleteLocaciones(Integer idEvento,Integer idLocaciones);
+    public void deleteLocaciones(Integer idLocaciones);
 }

@@ -5,6 +5,7 @@ import com.system.permission.systembackend.domain.model.Evento;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 public class LocacionesDTO {
     private Integer idLocacion;
@@ -16,7 +17,15 @@ public class LocacionesDTO {
     @NotNull
     private Integer capacidad;
 
-    private Evento evento;
+    private Set<Evento>eventos;
+
+    public Set<Evento> getEventos() {
+        return eventos;
+    }
+
+    public void setEventos(Set<Evento> eventos) {
+        this.eventos = eventos;
+    }
 
     public Integer getIdLocacion() {
         return idLocacion;
@@ -42,13 +51,6 @@ public class LocacionesDTO {
         this.capacidad = capacidad;
     }
 
-    public Evento getEvento() {
-        return evento;
-    }
-
-    public void setEvento(Evento evento) {
-        this.evento = evento;
-    }
     public LocacionesDTO(){
         super();
     }

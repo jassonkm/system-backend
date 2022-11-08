@@ -25,7 +25,15 @@ public class EventoDTO {
     @Size(max =100)
     private String qr;
 
-    private Set<Locaciones> locaciones;
+    private Locaciones locaciones;
+
+    public Locaciones getLocaciones() {
+        return locaciones;
+    }
+
+    public void setLocaciones(Locaciones locaciones) {
+        this.locaciones = locaciones;
+    }
 
     public Integer getIdEvento() {
         return idEvento;
@@ -67,13 +75,6 @@ public class EventoDTO {
         this.qr = qr;
     }
 
-    public Set<Locaciones> getLocaciones() {
-        return locaciones;
-    }
-
-    public void setLocaciones(Set<Locaciones> locaciones) {
-        this.locaciones = locaciones;
-    }
     public EventoDTO(){
         super();
     }

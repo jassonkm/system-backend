@@ -1,27 +1,18 @@
 package com.system.permission.systembackend.domain.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "Eventos",
-        uniqueConstraints = {
-        @UniqueConstraint(columnNames = "QR")
-        })
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "idEvento")
-public class Evento implements Serializable {
-    private static final long serialVersionUID = 1L;
-
+    uniqueConstraints = {
+            @UniqueConstraint(columnNames = "QR")
+    })
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idEvento")
+public class Evento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_evento")
@@ -35,11 +26,17 @@ public class Evento implements Serializable {
     private String nAsistentes;
 
     private String qr;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idLocacion")
+    private Locaciones locaciones;
 
-    @OneToMany(mappedBy = "evento",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<Locaciones> locaciones=new HashSet<>();
+    public Evento(){}
 
-    public Evento() {
+    public Evento(String nombre, Date fecha, String nAsistentes, String qr) {
+        this.nombre = nombre;
+        this.fecha = fecha;
+        this.nAsistentes = nAsistentes;
+        this.qr = qr;
     }
 
     public Integer getIdEvento() {
@@ -82,22 +79,12 @@ public class Evento implements Serializable {
         this.qr = qr;
     }
 
-    public Set<Locaciones> getLocaciones() {
+    public Locaciones getLocations() {
         return locaciones;
     }
 
-    public void setLocaciones(Set<Locaciones> locaciones) {
+    public void setLocations(Locaciones locaciones) {
         this.locaciones = locaciones;
     }
-
-    public Evento(String nombre, Date fecha, String qr, Set<Locaciones> locaciones) {
-        this.nombre = nombre;
-        this.fecha = fecha;
-        this.qr = qr;
-        this.locaciones = locaciones;
-    }
-
-    public Evento(String nAsistentes) {
-        this.nAsistentes = nAsistentes;
-    }
+    public Evento(String nAsistentes){ this.nAsistentes=nAsistentes;}
 }

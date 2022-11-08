@@ -31,22 +31,18 @@ public class EventoController {
     private static final Logger logger= LoggerFactory.getLogger(EventoController.class);
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/add")
-    public ResponseEntity<?>createEvento(@Valid @RequestBody Evento evento){
-        if (eventoService.isNombre(evento.getNombre())){
+    @PostMapping("/locacion/{idLocacion}/eventos/{idEvento}")
+    public ResponseEntity<?>createEvento(@PathVariable(value = "idLocacion") Integer idLocacion, @Valid @RequestBody EventoDTO eventoDTO){
+        if (eventoService.isNombre(eventoDTO.getNombre())){
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Este nombre de evento ya esta en uso"));
+                    .body(new MessageResponse("Error: El nombre del evento ya esta en uso"));
         }
-        try {
-            return ResponseEntity
-                    .status(HttpStatus.CREATED)
-                    .body(eventoService.saveEvento(evento));
-        }catch (Exception e){
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse(("El evento ya existe")));
-        }
+        return  ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(eventoService.saveEvento(idLocacion, eventoDTO));
+
+
     }
 
     @GetMapping("/getEventos")
@@ -162,17 +158,19 @@ public class EventoController {
         }
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/delete/{idEvento}")
-    public ResponseEntity<?> deleteEvento(@PathVariable(value = "idEvento")Integer idEvento){
-        try{
-            eventoService.deleteEvento(idEvento);
-            return ResponseEntity.ok()
-                    .body(new MessageResponse("Correcto: EL evento se elimino"));
+    @DeleteMapping("/delete/{idLocacion}/eventos({idEventos}")
+    public ResponseEntity<?> deleteEvento(@PathVariable(value = "idEventos")Integer idEvento,@PathVariable(value = "idLocacion")Integer idLocacion){
+        try {
+            eventoService.deleteEvento(idEvento, idLocacion);
+            return ResponseEntity
+                    .ok()
+                    .body(new MessageResponse("Evento eliminado correctamente"));
         }catch (Exception e){
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(new MessageResponse("No se encontro: El evento seleccionado"));
+                    .body(new MessageResponse("Error el evento no se encuentra"));
         }
+
     }
 
 

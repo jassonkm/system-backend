@@ -1,35 +1,34 @@
 package com.system.permission.systembackend.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "locaciones")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idLocacion")
-public class Locaciones {
+public class Locaciones implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_locacion")
     private Integer idLocacion;
+
     private String nombre;
+
     private Integer capacidad;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_evento")
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //Ignora la serializacion
-    private Evento evento;
+    @OneToMany(mappedBy = "locaciones",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    private Set<Evento> events= new HashSet<>();
 
     public Locaciones(){}
-
-    public Locaciones(String nombre, Integer capacidad) {
-        this.nombre = nombre;
-        this.capacidad = capacidad;
-
-    }
 
     public Integer getIdLocacion() {
         return idLocacion;
@@ -55,11 +54,17 @@ public class Locaciones {
         this.capacidad = capacidad;
     }
 
-    public Evento getEvento() {
-        return evento;
+    public Set<Evento> getEvents() {
+        return events;
     }
 
-    public void setEvento(Evento evento) {
-        this.evento = evento;
+    public void setEvents(Set<Evento> events) {
+        this.events = events;
+    }
+
+    public Locaciones(String nombre, Integer capacidad, Set<Evento> events) {
+        this.nombre = nombre;
+        this.capacidad = capacidad;
+        this.events = events;
     }
 }

@@ -2,6 +2,7 @@ package com.system.permission.systembackend.services.impl;
 
 import com.system.permission.systembackend.domain.dto.EventoDTO;
 import com.system.permission.systembackend.domain.model.Evento;
+import com.system.permission.systembackend.domain.model.Locaciones;
 import com.system.permission.systembackend.repository.EventoRepository;
 import com.system.permission.systembackend.repository.LocacionesRepository;
 import com.system.permission.systembackend.services.EventoService;
@@ -9,6 +10,7 @@ import com.system.permission.systembackend.web.exceptions.ResourceNotFoundExcept
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.system.permission.systembackend.web.exceptions.AppException;
 
 import java.util.List;
 
@@ -31,14 +33,16 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public Evento saveEvento(Evento evento) {
-        evento=eventoRepository.save(evento);
-        Evento finalEvento=evento;
-        evento.getLocaciones().forEach(locaciones -> {
-            locaciones.setEvento(finalEvento);
-            locacionesRepository.save(locaciones);
-        });
-        return evento;
+    public Evento saveEvento(Integer idLocacion, EventoDTO eventoDTO) {
+        Evento evento= new Evento(
+                eventoDTO.getNombre(),
+                eventoDTO.getFecha(),
+                eventoDTO.getnAsistentes(),
+                eventoDTO.getQr());
+        Locaciones locaciones = locacionesRepository.findById(idLocacion)
+                .orElseThrow(()-> new ResourceNotFoundException("Locacion","idLocacion",idLocacion));
+        evento.setLocations(locaciones);
+        return eventoRepository.save(evento);
     }
 
 
@@ -82,9 +86,12 @@ public class EventoServiceImpl implements EventoService {
     }
 
     @Override
-    public void deleteEvento(Integer idEvento) {
-        Evento evento=eventoRepository.findById(idEvento)
+    public void deleteEvento(Integer idEvento, Integer idLocacion) {
+        Locaciones locaciones = locacionesRepository.findById(idLocacion)
+                .orElseThrow(()-> new ResourceNotFoundException("Locacion","idLocacion",idLocacion));
+        Evento evento= eventoRepository.findById(idEvento)
                 .orElseThrow(()-> new ResourceNotFoundException("Evento","idEvento",idEvento));
+
         eventoRepository.delete(evento);
     }
 }
